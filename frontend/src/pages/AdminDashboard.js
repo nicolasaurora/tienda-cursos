@@ -3,12 +3,12 @@ import React, { useEffect, useState } from 'react';
 const AdminDashboard = () => {
   const [resumen, setResumen] = useState([]);
 
-  // useEffect(() => {
-    
-  //   fetch('http://localhost:8080/admin/compras-resumen')
-  //     .then(res => res.json())
-  //     .then(data => setResumen(data));
-  // }, []);
+    useEffect(() => {
+    fetch('http://localhost:8080/admin/compras-resumen')
+      .then(res => res.json())
+      .then(data => setResumen(Array.isArray(data) ? data : []))
+      .catch(() => setResumen([]));
+    }, []);
 
   return (
     <div 
