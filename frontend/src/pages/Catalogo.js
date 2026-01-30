@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+const API = process.env.REACT_APP_API;
+
 const Catalogo = () => {
   const [cursos, setCursos] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:3001/cursos')
       .then(res => res.json())
-      .then(data => setCursos(data));
+      .then(data => {
+        if (Array.isArray(data)) {
+          setCursos(data);
+        } else if (Array.isArray(data.cursos)) {
+          setCursos(data.cursos);
+        } else {
+          setCursos([]);
+        }
+      });
   }, []);
 
   return (

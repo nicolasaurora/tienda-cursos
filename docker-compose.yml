@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    networks:
+      - iga-network
+    environment:
+      MYSQL_DATABASE: cursos_db
+      MYSQL_ROOT_PASSWORD: nickomysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5  
+    ports:
+      - "3307:3306"
+
+  backend:
+    networks:
+      - iga-network
+    build: ./backend-nest
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: nickomysql
+      DB_NAME: cursos_db 
+
+  frontend:
+    networks:
+      - iga-network
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+    - backend
+
+  admin:
+    networks:
+      - iga-network
+    build: ./backend-admin
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: cursos_db
+      DB_USER: root
+      DB_PASS: nickomysql  
+
+networks:
+  iga-network:
+    driver: bridge      

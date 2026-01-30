@@ -8,8 +8,9 @@ function App() {
   return (
     <Router>
       <nav style={{ padding: '10px', background: '#f4f4f4' }}>
-        <a href="/" style={{ marginRight: '10px' }}>Catálogo</a>
-        <a href="/admin">Admin</a>
+        <a href="/" style={{ marginRight: '30px' }}>Catálogo</a>
+        <a href="/admin" style={{ marginRight: '30px' }}>Admin</a>
+        <a href="/mis-Compras">Buscar compras por email</a>
       </nav>
       
       <Routes>

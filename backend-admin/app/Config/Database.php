@@ -1,5 +1,6 @@
 <?php
 
+
 namespace Config;
 
 use CodeIgniter\Database\Config;
@@ -26,17 +27,43 @@ class Database extends Config
      */
     public array $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => 'nickomysql',
-        'database' => 'cursos_db',
+        'hostname' => '',
+        'username' => '',
+        'password' => '',
+        'database' => '',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
         'DBDebug'  => true,
         'charset'  => 'utf8',
         'DBCollat' => 'utf8_general_ci',
+        'swapPre'  => '',
+        'encrypt'  => false,
+        'compress' => false,
+        'strictOn' => false,
+        'failover' => [],
+        'port'     => 3306,
     ];
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->default['hostname'] = getenv('DB_HOST') ?: 'db';
+        $this->default['database'] = getenv('DB_NAME') ?: 'cursos_db';
+        $this->default['username'] = getenv('DB_USER') ?: 'root';
+        $this->default['password'] = getenv('DB_PASS') ?: '';
+
+        parent::__construct();
+
+        // Ensure that we always set the database group to 'tests' if
+        // we are currently running an automated test suite, so that
+        // we don't overwrite live data on accident.
+        if (ENVIRONMENT === 'testing') {
+            $this->defaultGroup = 'tests';
+        }
+    }
+
 
     //    /**
     //     * Sample database connection for SQLite3.
@@ -177,15 +204,4 @@ class Database extends Config
         ],
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
-
-        // Ensure that we always set the database group to 'tests' if
-        // we are currently running an automated test suite, so that
-        // we don't overwrite live data on accident.
-        if (ENVIRONMENT === 'testing') {
-            $this->defaultGroup = 'tests';
-        }
-    }
 }
