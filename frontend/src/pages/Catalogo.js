@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const API = process.env.REACT_APP_API;
-
 const Catalogo = () => {
   const [cursos, setCursos] = useState([]);
 

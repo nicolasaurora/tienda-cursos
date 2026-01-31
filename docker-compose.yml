@@ -10,7 +10,7 @@ services:
       MYSQL_DATABASE: cursos_db
       MYSQL_ROOT_PASSWORD: nickomysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pnickomysql"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${DB_USER}", "-p${DB_PASSWORD}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -31,9 +31,9 @@ services:
     environment:
       DB_HOST: db
       DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: nickomysql
-      DB_NAME: cursos_db 
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
 
   frontend:
     networks:
@@ -57,9 +57,9 @@ services:
       
       CI_ENVIRONMENT: development
       database_default_hostname: db
-      database_default_database: cursos_db
-      database_default_username: root
-      database_default_password: nickomysql
+      database_default_database: ${DB_NAME}
+      database_default_username: ${DB_USER}
+      database_default_password: ${DB_PASSWORD}
       database_default_DBDriver: MySQLi
 
 networks:
