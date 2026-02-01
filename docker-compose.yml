@@ -7,8 +7,8 @@ services:
     networks:
       - iga-network
     environment:
-      MYSQL_DATABASE: cursos_db
-      MYSQL_ROOT_PASSWORD: nickomysql
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${DB_USER}", "-p${DB_PASSWORD}"]
       interval: 5s
