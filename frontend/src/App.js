@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Catalogo from './pages/Catalogo';
 import Checkout from './pages/Checkout';
 import AdminDashboard from './pages/AdminDashboard';
@@ -8,9 +8,9 @@ function App() {
   return (
     <Router>
       <nav style={{ padding: '10px', background: '#f4f4f4' }}>
-        <a href="/" style={{ marginRight: '30px' }}>Catálogo</a>
-        <a href="/admin" style={{ marginRight: '30px' }}>Admin</a>
-        <a href="/mis-Compras">Buscar compras por email</a>
+        <Link to="/" style={{ marginRight: '30px' }}>Catálogo</Link>
+        <Link to="/admin" style={{ marginRight: '30px' }}>Admin</Link>
+        <Link to="/mis-Compras">Buscar compras por email</Link>
       </nav>
       
       <Routes>
